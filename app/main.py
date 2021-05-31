@@ -15,9 +15,3 @@ def get_slack_bolt_app():
         token=os.getenv("SLACK_BOT_TOKEN"),
         signing_secret=os.getenv("SLACK_SIGNING_SECRET")
     )
-
-
-# Start app
-if __name__ == "__main__":
-    app = get_slack_bolt_app()
-    app.start(port=int(os.environ.get("PORT", 3000)))
