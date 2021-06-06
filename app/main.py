@@ -64,8 +64,7 @@ def ask_standup_status(say):
                     }
                 }
             ]
-        },
-        text="Please add your standup status"
+        }
     )
 
 
