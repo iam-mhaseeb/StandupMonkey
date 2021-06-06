@@ -69,7 +69,7 @@ def ask_standup_status(say):
 
 
 @app.command("/standup")
-def repeat_text(ack, say, command):
+def standup_command(ack, say, command):
     ack()
     ask_standup_status(say)
 
@@ -79,6 +79,7 @@ def action_yesterday_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
     msg = body['message']['text']
+    print(body)
     say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, 'yesterday', msg)
     if check_standup_status_submission_completed():
