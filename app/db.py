@@ -19,13 +19,14 @@ def create_tables_in_db():
             yesterday   TEXT,
             today       TEXT,
             blocker     TEXT,
+            channel     TEXT,
             modified_at TEXT
         );
         """
     )
 
 
-def upsert_today_standup_status(user_id, column_name, message):
+def upsert_today_standup_status(user_id, channel, column_name='', message=''):
     """
     Inserts today's standup status to database.
     :param message: Standup message to store
@@ -39,16 +40,19 @@ def upsert_today_standup_status(user_id, column_name, message):
         INSERT INTO standups (
             user_id,
             date,
-            {column_name},
+            {column_name}
+            channel,
             modified_at
         )
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(user_id, date) DO UPDATE SET 
             user_id=excluded.user_id,
             date=excluded.date
         ;
-        """.format(column_name=column_name),
-        (user_id, today, message, now)
+        """.format(
+            column_name=f'{column_name},' if column_name else ''
+        ),
+        (user_id, today, message, channel, now)
     )
 
 
