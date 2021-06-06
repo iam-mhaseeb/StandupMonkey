@@ -78,7 +78,7 @@ def standup_command(ack, say, command):
 def action_yesterday_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
-    msg = body['actions']['value']
+    msg = body['actions'][0]['value']
     import json
     print(json.dumps(body))
     say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
@@ -91,7 +91,7 @@ def action_yesterday_standup_status(body, ack, say):
 def action_today_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
-    msg = body['actions']['value']
+    msg = body['actions'][0]['value']
     say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     # upsert_today_standup_status(user_id, 'today', msg)
     if check_standup_status_submission_completed():
@@ -102,7 +102,7 @@ def action_today_standup_status(body, ack, say):
 def action_blocker_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
-    msg = body['actions']['value']
+    msg = body['actions'][0]['value']
     say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     # upsert_today_standup_status(user_id, 'blocker', msg)
     if check_standup_status_submission_completed():
