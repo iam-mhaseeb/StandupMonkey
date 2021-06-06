@@ -1,26 +1,16 @@
 import os
-import logging
 
 from slack_bolt import App
 
-LOGGER = logging.getLogger(__name__)
+from app.db import upsert_today_standup_status
 
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-STANDUP_STATUS = {
-    'yesterday': '',
-    'today': '',
-    'blocker': '',
-}
-
 
 def check_standup_status_submission_completed():
-    if STANDUP_STATUS['yesterday'] and STANDUP_STATUS['today'] and STANDUP_STATUS['blocker']:
-        return True
-
     return False
 
 
@@ -74,7 +64,8 @@ def ask_standup_status(say):
                     }
                 }
             ]
-        }
+        },
+        text="Please add your standup status"
     )
 
 
@@ -87,7 +78,10 @@ def repeat_text(ack, say, command):
 @app.action("lastday-action")
 def action_yesterday_standup_status(body, ack, say):
     ack()
-    LOGGER.info(body)
+    user_id = body['user']['id']
+    msg = body['message']['text']
+    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, 'yesterday', msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
@@ -95,6 +89,10 @@ def action_yesterday_standup_status(body, ack, say):
 @app.action("today-action")
 def action_today_standup_status(body, ack, say):
     ack()
+    user_id = body['user']['id']
+    msg = body['message']['text']
+    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, 'today', msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
@@ -102,5 +100,9 @@ def action_today_standup_status(body, ack, say):
 @app.action("blocker-action")
 def action_blocker_standup_status(body, ack, say):
     ack()
+    user_id = body['user']['id']
+    msg = body['message']['text']
+    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, 'blocker', msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
