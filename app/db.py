@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 
-CON = sqlite3.connect('standup-monkey.db')
+CON = sqlite3.connect('standup-monkey.db', check_same_thread=False)
 CURSOR = CON.cursor()
 
 
