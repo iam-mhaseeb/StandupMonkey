@@ -79,9 +79,10 @@ def action_yesterday_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
     msg = body['message']['text']
-    print(body)
+    import json
+    print(json.dumps(body))
     say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
-    upsert_today_standup_status(user_id, 'yesterday', msg)
+    # upsert_today_standup_status(user_id, 'yesterday', msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
