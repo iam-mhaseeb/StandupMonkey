@@ -22,6 +22,34 @@ def ask_standup_status(say):
                     "type": "divider"
                 },
                 {
+                    "type": "context",
+                    "elements": [
+                        {
+                            "type": "plain_text",
+                            "text": "Select the channel to post your standup",
+                            "emoji": True
+                        }
+                    ]
+                },
+                {
+                    "type": "actions",
+                    "elements": [
+                        {
+                            "type": "channels_select",
+                            "placeholder": {
+                                "type": "plain_text",
+                                "text": "Select the channel to post your standup",
+                                "emoji": True
+                            },
+                            "initial_channel": "C12345678",
+                            "action_id": "channel-selection-action"
+                        }
+                    ]
+                },
+                {
+                    "type": "divider"
+                },
+                {
                     "dispatch_action": True,
                     "type": "input",
                     "element": {
