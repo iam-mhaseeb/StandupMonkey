@@ -16,9 +16,6 @@ def ask_standup_status(say):
                     "type": "divider"
                 },
                 {
-                    "type": "divider"
-                },
-                {
                     "dispatch_action": True,
                     "type": "input",
                     "element": {
@@ -71,12 +68,19 @@ def repeat_text(ack, say, command):
     ask_standup_status(say)
 
 
-# @app.action("button_click")
-# def action_button_click(body, ack, say):
-#     # Acknowledge the action
-#     ack()
-#     say(f"<@{body['user']['id']}> clicked the button")
+@app.action("lastday-action")
+def action_yesterday_standup_status(body, ack, say):
+    ack()
+    say(f"<@{body['user']['id']}> submitted yesterday's standup status.")
 
-@app.message("hello")
-def message_hello(message, say):
-    say(f"Hey there <@{message['user']}>!")
+
+@app.action("today-action")
+def action_today_standup_status(body, ack, say):
+    ack()
+    say(f"<@{body['user']['id']}> submitted today's standup status.")
+
+
+@app.action("blocker-action")
+def action_blocker_standup_status(body, ack, say):
+    ack()
+    say(f"<@{body['user']['id']}> submitted blocking status.")
