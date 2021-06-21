@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 from datetime import datetime
 
 CON = sqlite3.connect('standup-monkey.db', check_same_thread=False)
@@ -26,7 +27,19 @@ def create_tables_in_db():
     )
 
 
-def upsert_today_standup_status(user_id, channel, column_name='', message=''):
+def drop_tables_in_db():
+    """
+    Drops tables from db.
+    :return: None
+    """
+    CURSOR.execute(
+        """
+        DROP TABLE IF EXISTS standups;
+        """
+    )
+
+
+def upsert_today_standup_status(user_id, channel='', column_name='', message=''):
     """
     Inserts today's standup status to database.
     :param message: Standup message to store
@@ -41,20 +54,24 @@ def upsert_today_standup_status(user_id, channel, column_name='', message=''):
             user_id,
             date,
             {column_name}
-            channel,
+            {channel}
             modified_at
         )
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?)
         ON CONFLICT(user_id, date) DO UPDATE SET 
             user_id=excluded.user_id,
             date=excluded.date
         ;
         """.format(
-            column_name=f'{column_name},' if column_name else ''
+            column_name=f'{column_name},' if column_name else '',
+            channel=f'{channel},' if channel else ''
         ),
         (user_id, today, message, channel, now)
     )
 
 
 if __name__ == "__main__":
+    if sys.argv[1] == "drop-tables":
+        drop_tables_in_db()
+
     create_tables_in_db()

@@ -103,11 +103,11 @@ def standup_command(ack, say, command):
 
 
 @app.action("channel-selection-action")
-def action_yesterday_standup_status(body, ack, say):
+def action_channel_selection(body, ack, say):
     ack()
     channel = body['actions'][0]['selected_channel']
-    say(f"<@{body['user']['id']}> selected <#{channel}>")
-    # upsert_today_standup_status(user_id, 'yesterday', msg)
+    # say(f"<@{body['user']['id']}> selected <#{channel}>")
+    upsert_today_standup_status(body['user']['id'], channel=channel)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
@@ -117,8 +117,8 @@ def action_yesterday_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
     msg = body['actions'][0]['value']
-    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
-    # upsert_today_standup_status(user_id, 'yesterday', msg)
+    # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, column_name='yesterday', message=msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
@@ -128,8 +128,8 @@ def action_today_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
     msg = body['actions'][0]['value']
-    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
-    # upsert_today_standup_status(user_id, 'today', msg)
+    # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, column_name='today', message=msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
 
@@ -139,7 +139,7 @@ def action_blocker_standup_status(body, ack, say):
     ack()
     user_id = body['user']['id']
     msg = body['actions'][0]['value']
-    say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
-    # upsert_today_standup_status(user_id, 'blocker', msg)
+    # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
+    upsert_today_standup_status(user_id, column_name='blocker', message=msg)
     if check_standup_status_submission_completed():
         say(f"<@{body['user']['id']}> submitted standup status.")
