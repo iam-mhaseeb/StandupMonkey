@@ -46,6 +46,7 @@ def upsert_today_standup_status(user_id, channel='', column_name='', message='')
     :param column_name: Column name in which message needs to store
     :return: None
     """
+    create_tables_in_db()
     today = datetime.today().strftime('%Y-%m-%d')
     now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     CURSOR.execute(
