@@ -65,7 +65,7 @@ def upsert_today_standup_status(user_id, channel='', column_name='', message='')
         ;
         """.format(
             column_name=f'{column_name},' if column_name else '',
-            channel=f'{channel},' if channel else ''
+            channel=f'channel,' if channel else ''
         ),
         (user_id, today, message, channel, now)
     )
