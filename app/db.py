@@ -21,7 +21,8 @@ def create_tables_in_db():
             today       TEXT,
             blocker     TEXT,
             channel     TEXT,
-            modified_at TEXT
+            modified_at TEXT,
+            UNIQUE(user_id, date)
         );
         """
     )
