@@ -40,7 +40,7 @@ def drop_tables_in_db():
     )
 
 
-def upsert_today_standup_status(user_id, channel='', column_name='', message=''):
+def upsert_today_standup_status(user_id, channel=None, column_name=None, message=None):
     """
     Inserts today's standup status to database.
     :param message: Standup message to store
