@@ -34,15 +34,68 @@ def post_standup_completion_message(user_id, say):
     today_standup_status = get_today_standup_status(user_id)
     if check_standup_status_submission_completed(today_standup_status):
         say(
-            text=f"""
-            <@{user_id}> submitted standup status for {today_standup_status[1]} 🎉.
-            Yesterday's standup status:
-            {today_standup_status[2]}
-            Today's standup status:
-            {today_standup_status[3]}
-            Any blocker?
-            {today_standup_status[4]}
-            """,
+            text={
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"<@{user_id}> submitted standup status for {today_standup_status[1]} 🎉."
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Yesterday's standup status:",
+                            "emoji": True
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"{today_standup_status[2]}"
+                        }
+                    },
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Today's standup status:",
+                            "emoji": True
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"{today_standup_status[3]}"
+                        }
+                    },
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Any blocker?",
+                            "emoji": True
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"{today_standup_status[4]}"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    }
+                ]
+            },
             channel=today_standup_status[5]
         )
 
