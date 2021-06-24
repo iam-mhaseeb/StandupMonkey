@@ -10,14 +10,12 @@ app = App(
 )
 
 
-def check_standup_status_submission_completed(user_id):
+def check_standup_status_submission_completed(today_standup_status):
     """
     Checks if standup status is complete for user.
-    :param user_id: User whom standup is being checked
+    :param today_standup_status: Today's standup status
     :return: True if standup is complete otherwise False
     """
-    today_standup_status = get_today_standup_status(user_id)
-    print(today_standup_status)
     if today_standup_status[2] \
             and today_standup_status[3] \
             and today_standup_status[4] \
@@ -25,6 +23,28 @@ def check_standup_status_submission_completed(user_id):
         return True
 
     return False
+
+
+def post_standup_completion_message(user_id, say):
+    """
+    Post standup completion message to selected channel.
+    :param user_id: User for which standup needs to be posted
+    :return: None
+    """
+    today_standup_status = get_today_standup_status(user_id)
+    if check_standup_status_submission_completed(today_standup_status):
+        say(
+            text=f"""
+            <@{user_id}> submitted standup status for {today_standup_status[1]} 🎉.
+            <b>Yesterday's standup status</b>:
+            {today_standup_status[2]}
+            <b>Today's standup status</b>:
+            {today_standup_status[3]}
+            <b>Any blocker?</b>
+            {today_standup_status[4]}
+            """,
+            channel=today_standup_status[5]
+        )
 
 
 def ask_standup_status(say):
@@ -122,8 +142,7 @@ def action_channel_selection(body, ack, say):
     channel = body['actions'][0]['selected_channel']
     # say(f"<@{body['user']['id']}> selected <#{channel}>")
     upsert_today_standup_status(body['user']['id'], channel=channel)
-    if check_standup_status_submission_completed(user_id):
-        say(f"<@{body['user']['id']}> submitted standup status.")
+    post_standup_completion_message(user_id, say)
 
 
 @app.action("lastday-action")
@@ -133,8 +152,7 @@ def action_yesterday_standup_status(body, ack, say):
     msg = body['actions'][0]['value']
     # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, column_name='yesterday', message=msg)
-    if check_standup_status_submission_completed(user_id):
-        say(f"<@{body['user']['id']}> submitted standup status.")
+    post_standup_completion_message(user_id, say)
 
 
 @app.action("today-action")
@@ -144,8 +162,7 @@ def action_today_standup_status(body, ack, say):
     msg = body['actions'][0]['value']
     # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, column_name='today', message=msg)
-    if check_standup_status_submission_completed(user_id):
-        say(f"<@{body['user']['id']}> submitted standup status.")
+    post_standup_completion_message(user_id, say)
 
 
 @app.action("blocker-action")
@@ -155,5 +172,4 @@ def action_blocker_standup_status(body, ack, say):
     msg = body['actions'][0]['value']
     # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, column_name='blocker', message=msg)
-    if check_standup_status_submission_completed(user_id):
-        say(f"<@{body['user']['id']}> submitted standup status.")
+    post_standup_completion_message(user_id, say)
