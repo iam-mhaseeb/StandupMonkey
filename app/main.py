@@ -17,6 +17,7 @@ def check_standup_status_submission_completed(user_id):
     :return: True if standup is complete otherwise False
     """
     today_standup_status = get_today_standup_status(user_id)
+    print(today_standup_status)
     if today_standup_status['yesterday'] \
         and today_standup_status['today'] \
         and today_standup_status['blocker'] \
