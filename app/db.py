@@ -62,8 +62,10 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
         )
         VALUES (?, ?, ?, ?)
         ON CONFLICT(user_id, date) DO UPDATE SET 
-            user_id=excluded.user_id,
-            date=excluded.date
+            yesterday=excluded.yesterday,
+            today=excluded.today,
+            blocker=excluded.blocker,
+            channel=excluded.channel
         ;
         """.format(
             column_name=f'{column_name},' if column_name else '',
