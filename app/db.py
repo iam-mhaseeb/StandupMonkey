@@ -1,7 +1,9 @@
+import logging
 import sqlite3
 import sys
 from datetime import datetime
 
+LOGGER = logging.getLogger(__name__)
 CON = sqlite3.connect('standup-monkey.db', check_same_thread=False)
 CURSOR = CON.cursor()
 
@@ -50,24 +52,26 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
     create_tables_in_db()
     today = datetime.today().strftime('%Y-%m-%d')
     now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    sql = """
+    INSERT INTO standups (
+        user_id,
+        date,
+        {column_name}
+        {channel}
+        modified_at
+    )
+    VALUES (?, ?, ?, ?)
+    ON CONFLICT(user_id, date) DO UPDATE SET 
+        user_id=excluded.user_id,
+        date=excluded.date
+    ;
+    """.format(
+        column_name=f'{column_name},' if column_name else '',
+        channel=f'channel,' if channel else ''
+    )
+    LOGGER.info('Executing SQL: \n{}'.format(sql))
     CURSOR.execute(
-        """
-        INSERT INTO standups (
-            user_id,
-            date,
-            {column_name}
-            {channel}
-            modified_at
-        )
-        VALUES (?, ?, ?, ?)
-        ON CONFLICT(user_id, date) DO UPDATE SET 
-            user_id=excluded.user_id,
-            date=excluded.date
-        ;
-        """.format(
-            column_name=f'{column_name},' if column_name else '',
-            channel=f'channel,' if channel else ''
-        ),
+        sql,
         (user_id, today, channel, now) if channel else (user_id, today, message, now)
     )
 
