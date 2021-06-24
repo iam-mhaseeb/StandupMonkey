@@ -84,11 +84,9 @@ def get_today_standup_status(user_id):
     today = datetime.today().strftime('%Y-%m-%d')
     CURSOR.execute(
         """
-        SELECT * FROM standups WHERE user_id={user_id} AND date={today};
-        """.format(
-            user_id=user_id,
-            today=today
-        )
+        SELECT * FROM standups WHERE user_id=:user_id AND date=:today;
+        """,
+        {"user_id": user_id, "today": today}
     )
     return CURSOR.fetchone()
 
