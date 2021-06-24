@@ -48,6 +48,7 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
     :param column_name: Column name in which message needs to store
     :return: None
     """
+    drop_tables_in_db()
     create_tables_in_db()
     today = datetime.today().strftime('%Y-%m-%d')
     now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
@@ -96,5 +97,5 @@ def get_today_standup_status(user_id):
 if __name__ == "__main__":
     if sys.argv[1] == "drop-tables":
         drop_tables_in_db()
-    drop_tables_in_db()
+
     create_tables_in_db()
