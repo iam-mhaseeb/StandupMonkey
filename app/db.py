@@ -72,6 +72,24 @@ def upsert_today_standup_status(user_id, channel='', column_name='', message='')
     )
 
 
+def get_today_standup_status(user_id):
+    """
+    Gets today's standup status of user.
+    :param user_id: User whom standup is being retrieved
+    :return: Dict of values for today's standup
+    """
+    today = datetime.today().strftime('%Y-%m-%d')
+    CURSOR.execute(
+        """
+        SELECT * FROM standups WHERE user_id={user_id} AND date={today};
+        """.format(
+            user_id=user_id,
+            today=today
+        )
+    )
+    return CURSOR.fetchone()
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "drop-tables":
         drop_tables_in_db()
