@@ -14,7 +14,7 @@ def create_tables_in_db():
     """
     CURSOR.execute(
         """
-        CREATE TABLE IF NOT EXISTS standups
+        CREATE TABLE standups
         (
             user_id     TEXT,
             date        TEXT,
@@ -36,7 +36,7 @@ def drop_tables_in_db():
     """
     CURSOR.execute(
         """
-        DROP TABLE IF EXISTS standups;
+        DROP TABLE standups;
         """
     )
 
@@ -48,12 +48,13 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
     :param column_name: Column name in which message needs to store
     :return: None
     """
+    drop_tables_in_db()
     create_tables_in_db()
     today = datetime.today().strftime('%Y-%m-%d')
     now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     CURSOR.execute(
         """
-        INSERT INTO standups AS s (
+        INSERT INTO standups (
             user_id,
             date,
             {column_name}
@@ -61,11 +62,11 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
             modified_at
         )
         VALUES (?, ?, ?, ?)
-        ON CONFLICT(s.user_id, s.date) DO UPDATE SET 
-            s.yesterday=excluded.yesterday,
-            s.today=excluded.today,
-            s.blocker=excluded.blocker,
-            s.channel=excluded.channel
+        ON CONFLICT(user_id, date) DO UPDATE SET 
+            yesterday=excluded.yesterday,
+            today=excluded.today,
+            blocker=excluded.blocker,
+            channel=excluded.channel
         ;
         """.format(
             column_name=f'{column_name},' if column_name else '',
