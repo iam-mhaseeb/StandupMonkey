@@ -36,11 +36,11 @@ def post_standup_completion_message(user_id, say):
         say(
             text=f"""
             <@{user_id}> submitted standup status for {today_standup_status[1]} 🎉.
-            <b>Yesterday's standup status</b>:
+            Yesterday's standup status:
             {today_standup_status[2]}
-            <b>Today's standup status</b>:
+            Today's standup status:
             {today_standup_status[3]}
-            <b>Any blocker?</b>
+            Any blocker?
             {today_standup_status[4]}
             """,
             channel=today_standup_status[5]
