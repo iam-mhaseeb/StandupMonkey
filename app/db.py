@@ -69,7 +69,7 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
             column_name=f'{column_name},' if column_name else '',
             channel=f'channel,' if channel else '',
             column_conflict_clause=f'{column_name}=excluded.{column_name}' if column_name else '',
-            channel_conflict_clause=f'{channel}=excluded.{channel}' if channel else ''
+            channel_conflict_clause='channel=excluded.channel' if channel else ''
         ),
         (user_id, today, channel, now) if channel else (user_id, today, message, now)
     )
