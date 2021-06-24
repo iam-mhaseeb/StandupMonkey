@@ -16,7 +16,7 @@ def create_tables_in_db():
         """
         CREATE TABLE IF NOT EXISTS standups
         (
-            user_id     INT,
+            user_id     TEXT,
             date        TEXT,
             yesterday   TEXT,
             today       TEXT,
@@ -96,5 +96,5 @@ def get_today_standup_status(user_id):
 if __name__ == "__main__":
     if sys.argv[1] == "drop-tables":
         drop_tables_in_db()
-
+    drop_tables_in_db()
     create_tables_in_db()
