@@ -13,6 +13,9 @@
     ·
     <a href="https://github.com/iam-mhaseeb/StandupMonkey/issues">Request Feature</a>
   </p>
+  <p align="center">
+   <a href="https://www.producthunt.com/posts/standupmonkey?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-standupmonkey" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=301821&theme=dark" alt="StandupMonkey - A self hosted slack bot to conduct standups. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+  </p>
 </p>
 
 ![Contributors](https://img.shields.io/github/contributors/iam-mhaseeb/StandupMonkey)
