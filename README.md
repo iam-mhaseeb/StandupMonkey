@@ -25,7 +25,7 @@ Installation
 -----------
 1. Install already hosted bot (**Use this for only testing purpose**)
 
-<a href="https://slack.com/oauth/v2/authorize?client_id=1679973182834.2145157912624&scope=channels:history,chat:write,im:history,im:read,commands&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+<a href="https://standup-monkey.herokuapp.com/slack/install"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
 2. Deploy on your own server (**Recommended**)
     1. Clone this repoistory and deploy on server of your choice
