@@ -244,16 +244,31 @@ def action_blocker_standup_status(body, ack, say):
 def standup_command(ack, say, command):
     ack()
     text = command.get('text')
-    # try:
-    splited_text = text.split(' ')
-    username = splited_text[0]
-    start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
-    date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
+    username = start_start = date_end = ''
+    try:
+        splited_text = text.split(' ')
+        username = splited_text[0]
+        start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
+        date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
+    except Exception as e:
+        say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
+
     report = generate_report(username, start_start, date_end)
     response = app.client.files_upload(
         file=report
     )
-    print(response)
-    # except Exception as e:
-    #     print(e)
-    #     say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
+    download_url = response['file']['permalink']
+    say(
+        text={
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"Your report for user {username} has been generated click link below to download:\n*<{download_url}|{report}>*"
+                        }
+                    }
+                ]
+            }
+    )
+
