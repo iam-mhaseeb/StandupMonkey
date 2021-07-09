@@ -115,7 +115,7 @@ def generate_report(username, start_date, end_date):
     csv_filename = f'starndup-report.csv'
     with open(csv_filename, 'w+', newline='') as report:
         fieldnames = ['date', 'user_id', 'yesterday', 'today', 'blocker']
-        writer = csv.writer(report, fieldnames=fieldnames)
+        writer = csv.writer(report)
 
         writer.writerow(fieldnames)
         for row in CURSOR.fetchall():
