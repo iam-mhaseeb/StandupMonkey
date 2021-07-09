@@ -255,5 +255,6 @@ def standup_command(ack, say, command):
                 file=file_content
             )
             print(response)
-    except:
+    except Exception as e:
+        print(e)
         say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
