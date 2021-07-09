@@ -244,17 +244,17 @@ def action_blocker_standup_status(body, ack, say):
 def standup_command(ack, say, command):
     ack()
     text = command.get('text')
-    try:
-        splited_text = text.split(' ')
-        username = splited_text[0]
-        start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
-        date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
-        report = generate_report(username, start_start, date_end)
-        with open(report) as file_content:
-            response = app.client.files_upload(
-                file=file_content
-            )
-            print(response)
-    except Exception as e:
-        print(e)
-        say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
+    # try:
+    splited_text = text.split(' ')
+    username = splited_text[0]
+    start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
+    date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
+    report = generate_report(username, start_start, date_end)
+    with open(report) as file_content:
+        response = app.client.files_upload(
+            file=file_content
+        )
+        print(response)
+    # except Exception as e:
+    #     print(e)
+    #     say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
