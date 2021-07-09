@@ -265,7 +265,7 @@ def standup_command(ack, say, command):
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": f"Your report for user {username} has been generated click link below to download:\n*<{download_url}|{report}>*"
+                            "text": f"Your report for user {username} has been generated click link below to download:\n*<{download_url}|Download Report>*",
                         }
                     }
                 ]
