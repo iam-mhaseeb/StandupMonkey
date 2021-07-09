@@ -111,7 +111,8 @@ def generate_report(username, start_date, end_date):
         end_date=end_date
     )
     CURSOR.execute(sql)
-    csv_filename = f'<@{username}>-starndup-report.csv'
+    # csv_filename = f'<@{username}>-starndup-report.csv'
+    csv_filename = f'starndup-report.csv'
     with open(csv_filename, newline='') as report:
         fieldnames = ['date', 'user_id', 'yesterday', 'today', 'blocker']
         writer = csv.writer(report, fieldnames=fieldnames)
