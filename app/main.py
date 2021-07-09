@@ -251,8 +251,9 @@ def standup_command(ack, say, command):
     date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
     report = generate_report(username, start_start, date_end)
     with open(report) as file_content:
+        print(file_content.readlines())
         response = app.client.files_upload(
-            file=file_content
+            file=file_content.readlines()
         )
         print(response)
     # except Exception as e:
