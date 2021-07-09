@@ -252,8 +252,13 @@ def standup_command(ack, say, command):
     report = generate_report(username, start_start, date_end)
     with open(report) as file_content:
         print(file_content.readlines())
+        print('_______________________________')
+        print(app._token)
+        print('###############################')
+        print(app.client.token)
+        print('_______________________________')
         response = app.client.files_upload(
-            token=app.client.token,
+            token=app._token,
             content=file_content.read(),
             filename=report
         )
