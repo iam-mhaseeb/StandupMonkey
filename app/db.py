@@ -1,3 +1,4 @@
+import csv
 import sqlite3
 import sys
 from datetime import datetime
@@ -89,6 +90,37 @@ def get_today_standup_status(user_id):
         {"user_id": user_id, "today": today}
     )
     return CURSOR.fetchone()
+
+
+def generate_report(username, start_date, end_date):
+    """
+    Generates report for a user in provided dates.
+    :param username: Username of user whom report is required
+    :param start_date: Start date to get records
+    :param end_date: End date till records neeed to be fetched
+    :return: A CSV filename containing report.
+    """
+    sql = """
+    SELECT * FROM standups
+    WHERE user_id={username}
+    AND date>={start_date}
+    AND date<={end_date};
+    """.format(
+        username=username,
+        start_date=start_date,
+        end_date=end_date
+    )
+    CURSOR.execute(sql)
+    csv_filename = f'<@{username}>-starndup-report.csv'
+    with open(csv_filename, newline='') as report:
+        fieldnames = ['date', 'user_id', 'yesterday', 'today', 'blocker']
+        writer = csv.writer(report, fieldnames=fieldnames)
+
+        writer.writerow(fieldnames)
+        for row in CURSOR.fetchall():
+            writer.writerow([row['date'], row['user_id'], row['yesterday'], row['today'], row['blocker']])
+
+    return csv_filename
 
 
 if __name__ == "__main__":

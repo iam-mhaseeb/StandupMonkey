@@ -1,11 +1,12 @@
 import os
+from datetime import datetime
 
 from slack_bolt import App
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.oauth.installation_store import FileInstallationStore
 from slack_sdk.oauth.state_store import FileOAuthStateStore
 
-from app.db import upsert_today_standup_status, get_today_standup_status
+from app.db import upsert_today_standup_status, get_today_standup_status, generate_report
 
 oauth_settings = OAuthSettings(
     client_id=os.environ["SLACK_CLIENT_ID"],
@@ -246,7 +247,13 @@ def standup_command(ack, say, command):
     try:
         splited_text = text.split(' ')
         username = splited_text[0]
-        start_start = splited_text[1]
-        date_end = splited_text[2]
+        start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
+        date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
+        report = generate_report(username, start_start, date_end)
+        with open(report) as file_content:
+            response = app.client.files_upload(
+                file=file_content
+            )
+            print(response)
     except:
-        say("You didn't try to generate in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
+        say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
