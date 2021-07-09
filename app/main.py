@@ -250,19 +250,10 @@ def standup_command(ack, say, command):
     start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
     date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
     report = generate_report(username, start_start, date_end)
-    with open(report) as file_content:
-        print(file_content.readlines())
-        print('_______________________________')
-        print(app._token)
-        print('###############################')
-        print(app.client.token)
-        print('_______________________________')
-        response = app.client.files_upload(
-            token=app._token,
-            content=file_content.read(),
-            filename=report
-        )
-        print(response)
+    response = app.client.files_upload(
+        file=report
+    )
+    print(response)
     # except Exception as e:
     #     print(e)
     #     say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
