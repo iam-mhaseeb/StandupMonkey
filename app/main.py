@@ -242,4 +242,11 @@ def action_blocker_standup_status(body, ack, say):
 @app.command("/generate-report")
 def standup_command(ack, say, command):
     ack()
-    print(command)
+    text = command.get('text')
+    try:
+        splited_text = text.split(' ')
+        username = splited_text[0]
+        start_start = splited_text[1]
+        date_end = splited_text[2]
+    except:
+        say("You didn't try to generate in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
