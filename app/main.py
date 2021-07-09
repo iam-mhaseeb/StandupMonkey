@@ -237,3 +237,9 @@ def action_blocker_standup_status(body, ack, say):
     # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, column_name='blocker', message=msg)
     post_standup_completion_message(user_id, say)
+
+
+@app.command("/generate-report")
+def standup_command(ack, say, command):
+    ack()
+    print(command)
