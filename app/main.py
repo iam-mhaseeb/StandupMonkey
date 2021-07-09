@@ -253,6 +253,7 @@ def standup_command(ack, say, command):
     with open(report) as file_content:
         print(file_content.readlines())
         response = app.client.files_upload(
+            token=app.client.token,
             content=file_content.read(),
             filename=report
         )
