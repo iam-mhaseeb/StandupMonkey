@@ -11,7 +11,7 @@ from app.db import upsert_today_standup_status, get_today_standup_status, genera
 oauth_settings = OAuthSettings(
     client_id=os.environ["SLACK_CLIENT_ID"],
     client_secret=os.environ["SLACK_CLIENT_SECRET"],
-    scopes=["channels:history", "chat:write", "commands", "im:history", "im:read"],
+    scopes=["channels:history", "chat:write", "commands", "im:history", "im:read", "files:write"],
     installation_store=FileInstallationStore(base_dir="./data"),
     state_store=FileOAuthStateStore(expiration_seconds=600, base_dir="./data")
 )
