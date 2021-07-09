@@ -253,7 +253,8 @@ def standup_command(ack, say, command):
     with open(report) as file_content:
         print(file_content.readlines())
         response = app.client.files_upload(
-            file=file_content.readlines()
+            file=report,
+            content=file_content.read()
         )
         print(response)
     # except Exception as e:
