@@ -102,7 +102,7 @@ def generate_report(username, start_date, end_date):
     """
     sql = """
     SELECT * FROM standups
-    WHERE user_id={username}
+    WHERE user_id='{username}'
     AND date>={start_date}
     AND date<={end_date};
     """.format(
