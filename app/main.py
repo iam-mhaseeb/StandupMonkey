@@ -243,18 +243,18 @@ def action_blocker_standup_status(body, ack, say):
 @app.command("/generate-report")
 def standup_command(ack, say, command):
     ack()
-    print(command)
     text = command.get('text')
-    username = start_start = date_end = ''
+    username = userid = start_start = date_end = ''
     try:
         splited_text = text.split(' ')
         username = splited_text[0]
+        userid = username.split('|')[0].repace('@', '').repace('<', '')
         start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
         date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
     except Exception as e:
         say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
 
-    report = generate_report(username, start_start, date_end)
+    report = generate_report(userid, start_start, date_end)
     response = app.client.files_upload(
         file=report
     )
