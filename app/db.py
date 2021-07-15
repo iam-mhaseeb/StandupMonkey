@@ -103,15 +103,13 @@ def generate_report(username, start_date, end_date):
     sql = """
     SELECT * FROM standups
     WHERE user_id='{username}'
-    AND date>={start_date}
-    AND date<={end_date};
+    AND date>='{start_date}'
+    AND date<='{end_date}';
     """.format(
         username=username,
         start_date=start_date,
         end_date=end_date
     )
-    sql = """
-        SELECT * FROM standups;"""
     CURSOR.execute(sql)
     csv_filename = f'<@{username}>-starndup-report.csv'
     with open(csv_filename, 'w+', newline='') as report:
@@ -120,7 +118,6 @@ def generate_report(username, start_date, end_date):
 
         writer.writerow(fieldnames)
         for row in CURSOR.fetchall():
-            print(row)
             writer.writerow([row[1], row[0], row[2], row[3], row[4]])
 
     return csv_filename
