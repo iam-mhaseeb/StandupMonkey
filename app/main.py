@@ -243,8 +243,8 @@ def action_blocker_standup_status(body, ack, say):
 @app.command("/generate-report")
 def standup_command(ack, say, command):
     ack()
-    print(command)
     text = command.get('text')
+    channel_id = command.get('channel_id')
     username = userid = start_start = date_end = ''
     try:
         splited_text = text.split(' ')
@@ -258,6 +258,7 @@ def standup_command(ack, say, command):
 
     report = generate_report(userid, start_start, date_end)
     response = app.client.files_upload(
+        channels=channel_id,
         file=report
     )
     print(response)
