@@ -243,6 +243,7 @@ def action_blocker_standup_status(body, ack, say):
 @app.command("/generate-report")
 def standup_command(ack, say, command):
     ack()
+    print(command)
     text = command.get('text')
     username = userid = start_start = date_end = ''
     try:
