@@ -118,6 +118,7 @@ def generate_report(username, start_date, end_date):
 
         writer.writerow(fieldnames)
         for row in CURSOR.fetchall():
+            print(row)
             writer.writerow([row['date'], row['user_id'], row['yesterday'], row['today'], row['blocker']])
 
     return csv_filename

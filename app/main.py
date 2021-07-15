@@ -261,7 +261,6 @@ def standup_command(ack, say, command):
         channels=channel_id,
         file=report
     )
-    print(response)
     download_url = response['file']['permalink']
     say(
         text={
