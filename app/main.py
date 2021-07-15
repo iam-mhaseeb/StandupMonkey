@@ -248,7 +248,7 @@ def standup_command(ack, say, command):
     try:
         splited_text = text.split(' ')
         username = splited_text[0]
-        userid = username.split('|')[0].replace('@', '').repace('<', '')
+        userid = username.split('|')[0].replace('@', '').replace('<', '')
         start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
         date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
     except Exception:
