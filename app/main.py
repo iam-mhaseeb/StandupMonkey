@@ -259,6 +259,7 @@ def standup_command(ack, say, command):
     response = app.client.files_upload(
         file=report
     )
+    print(response)
     download_url = response['file']['permalink']
     say(
         text={

@@ -110,7 +110,6 @@ def generate_report(username, start_date, end_date):
         start_date=start_date,
         end_date=end_date
     )
-    print(sql)
     CURSOR.execute(sql)
     csv_filename = f'<@{username}>-starndup-report.csv'
     with open(csv_filename, 'w+', newline='') as report:
