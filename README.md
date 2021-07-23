@@ -41,13 +41,17 @@ Installation
     9. Paste it in opened modal and click next
     10. Click create and app will be created in your workspace
     11. Go to manage your app screen & select **Basic Information**
-    12. Navigate to **App Credentials** section
-    13. Set the following enviornment variables:
+    12. Setup your postgres database on your desired service
+    13. Navigate to **App Credentials** section
+    14. Set the following enviornment variables:
         * **Client ID as SLACK_CLIENT_ID**
         * **Client Secret as SLACK_CLIENT_SECRET**
         * **Signing Secret as SIGNING_SECRET**
-    14. Add your newly added bot to your required channel  
-    15. You standup bot is now ready to use 🎉 
+        * **Database host as HOST**
+        * **Database user as USER**
+        * **Signing password as PASSWORD**
+    15. Add your newly added bot to your required channel  
+    16. You standup bot is now ready to use 🎉 
  
 Quick start
 -----------
