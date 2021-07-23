@@ -92,7 +92,7 @@ def get_today_standup_status(user_id):
     today = datetime.today().strftime('%Y-%m-%d')
     CURSOR.execute(
         """
-        SELECT * FROM standups WHERE user_id={user_id_val} AND date={today_val};
+        SELECT * FROM standups WHERE user_id='{user_id_val}' AND date={today_val};
         """.format(
             user_id_val=user_id,
             today_val=today
