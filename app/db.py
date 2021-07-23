@@ -68,7 +68,7 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
             {channel}
             modified_at
         )
-        VALUES (%s, %s, %s, %s)
+        VALUES (%s, %s::DATE, %s, %s::TIMESTAMP)
         ON CONFLICT(user_id, date) DO UPDATE SET
             {column_conflict_clause}
             {channel_conflict_clause}
