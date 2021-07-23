@@ -1,11 +1,17 @@
 import csv
-import sqlite3
+import os
+
+import psycopg2
 import sys
 from datetime import datetime
 
-CON = sqlite3.connect('standup-monkey.db', check_same_thread=False)
+CON = psycopg2.connect(
+    host=os.environ['host'],
+    database=os.environ['database'],
+    user=os.environ['user'],
+    password=os.environ['password']
+)
 CURSOR = CON.cursor()
-CON.set_trace_callback(print)
 
 
 def create_tables_in_db():
