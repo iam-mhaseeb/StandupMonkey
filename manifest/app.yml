@@ -18,6 +18,10 @@ features:
       url: https://standup-monkey.herokuapp.com/slack/events
       description: Asks for standup status
       should_escape: false
+    - command: /generate-report
+      url: https://standup-monkey.herokuapp.com/slack/events
+      description: Generate report for given user
+      should_escape: true
 oauth_config:
   redirect_urls:
     - https://standup-monkey.herokuapp.com/slack/oauth_redirect
@@ -25,9 +29,10 @@ oauth_config:
     bot:
       - channels:history
       - chat:write
+      - commands
+      - files:write
       - im:history
       - im:read
-      - commands
 settings:
   event_subscriptions:
     request_url: https://standup-monkey.herokuapp.com/slack/events
@@ -39,3 +44,4 @@ settings:
     request_url: https://standup-monkey.herokuapp.com/slack/events
   org_deploy_enabled: false
   socket_mode_enabled: false
+  token_rotation_enabled: false

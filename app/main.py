@@ -1,16 +1,17 @@
 import os
+from datetime import datetime
 
 from slack_bolt import App
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.oauth.installation_store import FileInstallationStore
 from slack_sdk.oauth.state_store import FileOAuthStateStore
 
-from app.db import upsert_today_standup_status, get_today_standup_status
+from app.db import upsert_today_standup_status, get_today_standup_status, generate_report
 
 oauth_settings = OAuthSettings(
     client_id=os.environ["SLACK_CLIENT_ID"],
     client_secret=os.environ["SLACK_CLIENT_SECRET"],
-    scopes=["channels:history", "chat:write", "commands", "im:history", "im:read"],
+    scopes=["channels:history", "chat:write", "commands", "im:history", "im:read", "files:write"],
     installation_store=FileInstallationStore(base_dir="./data"),
     state_store=FileOAuthStateStore(expiration_seconds=600, base_dir="./data")
 )
@@ -237,3 +238,41 @@ def action_blocker_standup_status(body, ack, say):
     # say(f"<@{body['user']['id']}> submitted standup status with message: {msg}.")
     upsert_today_standup_status(user_id, column_name='blocker', message=msg)
     post_standup_completion_message(user_id, say)
+
+
+@app.command("/generate-report")
+def standup_command(ack, say, command):
+    ack()
+    text = command.get('text')
+    channel_id = command.get('channel_id')
+    username = userid = start_start = date_end = ''
+    try:
+        splited_text = text.split(' ')
+        username = splited_text[0]
+        userid = username.split('|')[0].replace('@', '').replace('<', '')
+        start_start = datetime.strptime(splited_text[1], '%Y-%m-%d').date()
+        date_end = datetime.strptime(splited_text[2], '%Y-%m-%d').date()
+    except Exception:
+        say("You didn't try to generate report in correct syntax. The correct syntax ix `/generate-report @user start_date end_date`. ")
+        raise Exception
+
+    report = generate_report(userid, start_start, date_end)
+    response = app.client.files_upload(
+        channels=channel_id,
+        file=report
+    )
+    download_url = response['file']['permalink']
+    say(
+        text={
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"Your report for user {username} has been generated click link below to download:\n*<{download_url}|Download Report>*",
+                        }
+                    }
+                ]
+            }
+    )
+
