@@ -49,7 +49,7 @@ Installation
         * **Signing Secret as SIGNING_SECRET**
         * **Database host as HOST**
         * **Database user as USER**
-        * **Signing password as PASSWORD**
+        * **Database password as PASSWORD**
     15. Add your newly added bot to your required channel  
     16. You standup bot is now ready to use 🎉 
  
@@ -63,6 +63,9 @@ Quick start
 **Note: Make sure StandupMonkey is added to the channel in which you are trying to post your standup status**
 4. StanupMonkey will post submitted standup status to selected channel automatically
 ![image](https://user-images.githubusercontent.com/15142776/123472559-c0f47880-d610-11eb-8d95-ef60c3f709e5.png)
+3. Type **/generate-report @user start_date end_date** to generate CSV report of standup statuses of a user
+![image](https://user-images.githubusercontent.com/15142776/126823317-c14ba478-4870-49b7-bd01-7a660e3135e5.png)
+**Note:** Start date & date should be in the format: **YYYY-MM-DD**
 
 ## Authors
 
