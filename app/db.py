@@ -6,10 +6,10 @@ import sys
 from datetime import datetime
 
 CON = psycopg2.connect(
-    host=os.environ['host'],
-    database=os.environ['database'],
-    user=os.environ['user'],
-    password=os.environ['password']
+    host=os.environ['HOST'],
+    database=os.environ['DATABASE'],
+    user=os.environ['USER'],
+    password=os.environ['PASSWORD']
 )
 CURSOR = CON.cursor()
 
