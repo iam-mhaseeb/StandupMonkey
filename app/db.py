@@ -11,6 +11,7 @@ CON = psycopg2.connect(
     user=os.environ['USER'],
     password=os.environ['PASSWORD']
 )
+CON.set_session(autocommit=True)
 CURSOR = CON.cursor()
 
 
@@ -91,9 +92,11 @@ def get_today_standup_status(user_id):
     today = datetime.today().strftime('%Y-%m-%d')
     CURSOR.execute(
         """
-        SELECT * FROM standups WHERE user_id=:user_id AND date=:today;
-        """,
-        {"user_id": user_id, "today": today}
+        SELECT * FROM standups WHERE user_id={user_id_val} AND date={today_val};
+        """.format(
+            user_id_val=user_id,
+            today_val=today
+        )
     )
     return CURSOR.fetchone()
 
