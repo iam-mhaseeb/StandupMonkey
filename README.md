@@ -47,6 +47,7 @@ Installation
         * **Client ID as SLACK_CLIENT_ID**
         * **Client Secret as SLACK_CLIENT_SECRET**
         * **Signing Secret as SIGNING_SECRET**
+        * **Slack bot token as SLACK_BOT_TOKEN** Yes, we need it really :( files upload doesn't work without it.
         * **Database host as HOST**
         * **Database user as USER**
         * **Database password as PASSWORD**
