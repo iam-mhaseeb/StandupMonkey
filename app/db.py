@@ -57,8 +57,8 @@ def upsert_today_standup_status(user_id, channel=None, column_name=None, message
     :return: None
     """
     create_tables_in_db()
-    today = datetime.today().strftime('%Y-%m-%d')
-    now = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    today = datetime.today().date()
+    now = datetime.today()
     CURSOR.execute(
         """
         INSERT INTO standups (
@@ -89,10 +89,10 @@ def get_today_standup_status(user_id):
     :param user_id: User whom standup is being retrieved
     :return: Dict of values for today's standup
     """
-    today = datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today()
     CURSOR.execute(
         """
-        SELECT * FROM standups WHERE user_id='{user_id_val}' AND date={today_val};
+        SELECT * FROM standups WHERE user_id='{user_id_val}' AND date='{today_val}';
         """.format(
             user_id_val=user_id,
             today_val=today
