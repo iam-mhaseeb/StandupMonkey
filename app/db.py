@@ -25,12 +25,12 @@ def create_tables_in_db():
         CREATE TABLE IF NOT EXISTS standups
         (
             user_id     TEXT,
-            date        TEXT,
+            date        DATE,
             yesterday   TEXT,
             today       TEXT,
             blocker     TEXT,
             channel     TEXT,
-            modified_at TEXT,
+            modified_at DATETIME DEFAULT NOW(),
             UNIQUE(user_id, date)
         );
         """
