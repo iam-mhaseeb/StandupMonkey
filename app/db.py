@@ -30,7 +30,7 @@ def create_tables_in_db():
             today       TEXT,
             blocker     TEXT,
             channel     TEXT,
-            modified_at DATETIME DEFAULT NOW(),
+            modified_at TIMESTAMP DEFAULT NOW(),
             UNIQUE(user_id, date)
         );
         """
