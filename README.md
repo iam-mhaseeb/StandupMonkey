@@ -67,7 +67,7 @@ Quick start
 5. Type **/generate-report @user start_date end_date** to generate CSV report of standup statuses of a user
 ![image](https://user-images.githubusercontent.com/15142776/126823317-c14ba478-4870-49b7-bd01-7a660e3135e5.png)
 **Note:** Start date & date should be in the format: **YYYY-MM-DD**
-6. You generated report will be something like this
+6. Your generated report will be something like this
 ![image](https://user-images.githubusercontent.com/15142776/126823561-ef3cd486-0ab5-4a00-9904-c9bb9a07e74c.png)
 
 ## Authors
